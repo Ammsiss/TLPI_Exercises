@@ -11,4 +11,4 @@ all: $(TARGETS)
 
 .PHONY: clean
 clean:
-	rm -f $(TARGETS)
+	rm -f $(TARGETS) test.txt
