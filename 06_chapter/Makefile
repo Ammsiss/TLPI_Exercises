@@ -2,13 +2,15 @@ CC = clang
 CFLAGS = -Wall -Wextra -Wpedantic -g -O0 -std=c23
 
 CFILES = $(wildcard ./*.c)
-TARGETS = $(basename $(CFILES))
+BASE_NAME = $(basename $(CFILES))
+BIN_NAME = $(addsuffix .bin, $(BASE_NAME))
 
-all: $(TARGETS)
+.PHONY: all
+all: $(BASE_NAME)
 
 %: %.c
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@.bin
 
 .PHONY: clean
 clean:
-	rm -f $(TARGETS)
+	rm -f $(BIN_NAME)
