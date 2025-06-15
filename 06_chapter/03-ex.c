@@ -1,5 +1,11 @@
 ////////////////////////////////////////////////////////////////////////
 // 6.10 - 6-3. Reimplementing setenv() and unsetenv()
+//
+//
+// Limitations:
+// - No handling for invalid environ entries such as empty string or no
+//   '=' character.
+// - No error return values.
 ////////////////////////////////////////////////////////////////////////
 
 #define _GNU_SOURCE
@@ -11,8 +17,6 @@
 #include <sys/uio.h>
 
 extern char** environ;
-
-// test________
 
 void setenv_clone(const char* name, const char* value, int overwrite)
 {
@@ -33,6 +37,9 @@ void setenv_clone(const char* name, const char* value, int overwrite)
 
 void unsetenv_clone(const char* name)
 {
+    if (environ == NULL)
+        return;
+
     while (1) {
         int index = 0;
         int itExists = 0;
