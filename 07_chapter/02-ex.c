@@ -30,17 +30,19 @@ Limitations:
 void *malloc_clone(size_t size)
 {
     void *block = sbrk(size);
-    uintptr_t start_of_block = (uintptr_t)block;
-
-    if ((int)start_of_block == -1)
+    uintptr_t block_value = (uintptr_t)block;
+    if ((int)block_value == -1)
         errExit("sbrk");
 
     ++blocks_allocated;
 
+    // current block number
     int32_t *meta_data = block;
     *meta_data = blocks_allocated;
-    meta_data = (int*)((char*)block + 4);
-    *meta_data = (int32_t)((uintptr_t)sbrk(0) - start_of_block);
+
+    // block size
+    meta_data = (int32_t*)((char*)block + 4);
+    *meta_data = (int32_t)((uintptr_t)sbrk(0) - block_value);
 
     void *user_start = (char*)block + 8;
     return user_start;
