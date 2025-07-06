@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////
-// 12.4 - 12-1.
+// 12.4 - 12-1. List proccess by user
 ////////////////////////////////////////////////////////////////////////
 
 /*
@@ -9,8 +9,6 @@
  * all printed entries)
  *
  * Modularize dynamic growth of array
- *
- * Handle case where /proc/PID dissapears in the time it was checked
  */
 
 #define _GNU_SOURCE
@@ -26,7 +24,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include "../lib/error_functions.h"
+#include "error_functions.h"
 
 #define MAX_COMM_NAME 64
 #define MAX_PID 32
@@ -144,7 +142,7 @@ char* getField(const char *line)
     return field;
 }
 
-int getProcessInfo(uid_t uid, struct ProcessInfo* info, const char *statusFile)
+int getProcessInfo(uid_t uid, struct ProcessInfo* info, const char *processID)
 {
     char *path = malloc(4096);
     if (!path) errExit("malloc");
@@ -154,7 +152,7 @@ int getProcessInfo(uid_t uid, struct ProcessInfo* info, const char *statusFile)
     const char *tail = "/status";
 
     strcat(path, header);
-    strcat(path, statusFile);
+    strcat(path, processID);
     strcat(path, tail);
 
     int fd = open(path, O_RDONLY);
@@ -217,10 +215,12 @@ int getProcessInfo(uid_t uid, struct ProcessInfo* info, const char *statusFile)
 
         free((void *)line);
 
-        if (collected == 3)
+        if (collected == 3) {
             break;
+        }
     }
 
+    close(fd);
     return 0;
 }
 
@@ -285,6 +285,8 @@ int main(int argc, char** argv)
             processList = temp;
         }
     }
+
+    closedir(dirStream);
 
     print(argv[argc- 1], processList, directoryCount);
     free(processList);

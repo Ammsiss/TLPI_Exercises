@@ -1,7 +1,8 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Wpedantic -g -O0 -std=c23
+CFLAGS = -Wall -Wextra -Wpedantic -g -O0 -std=c23 -I../lib
 
 CFILES = $(wildcard ./*.c)
+LIBS = $(wildcard ../lib/*.c)
 BASE_NAME = $(basename $(CFILES))
 BIN_NAME = $(addsuffix .bin, $(BASE_NAME))
 
@@ -9,7 +10,7 @@ BIN_NAME = $(addsuffix .bin, $(BASE_NAME))
 all: $(BASE_NAME)
 
 %: %.c
-	$(CC) $(CFLAGS) $< -o $@.bin
+	$(CC) $(CFLAGS) $< $(LIBS) -o $@.bin
 
 .PHONY: clean
 clean:
