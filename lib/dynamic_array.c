@@ -93,7 +93,7 @@ void* da_push(DynArray *arr)
         size_t capacity;
 
         if (arr->capacity == 0) capacity = 1;
-        else                     capacity = arr->capacity * 2;
+        else                    capacity = arr->capacity * 2;
 
         void *temp = arr->data;
         temp = realloc(arr->data, capacity * arr->dataSize);
@@ -119,5 +119,27 @@ int da_pop(DynArray *arr)
         return -1;
 
     --arr->size;
+    return 1;
+}
+
+// Algorithms
+
+int da_reverse(DynArray *arr)
+{
+    if (arr->size <= 0)
+        return -1;
+
+    char *newData = malloc(arr->capacity * arr->dataSize);
+    if (!newData)
+        return -1;
+
+    for (size_t i = arr->size - 1, y = 0; (int)i >= 0; --i, ++y) {
+        void *element = da_get(arr, i);
+        memcpy(newData + y * arr->dataSize, element, arr->dataSize);
+    }
+
+    free(arr->data);
+    arr->data = newData;
+
     return 1;
 }

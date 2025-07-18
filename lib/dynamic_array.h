@@ -26,4 +26,6 @@ void* da_get(const DynArray *arr, size_t index);
 void* da_push(DynArray *arr);
 void* da_pop(DynArray *arr);
 
+int da_reverse(DynArray *arr);
+
 #endif
