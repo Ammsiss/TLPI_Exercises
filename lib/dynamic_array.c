@@ -143,3 +143,16 @@ int da_reverse(DynArray *arr)
 
     return 1;
 }
+
+int int_asc(const void *elem0, const void *elem1)
+{
+    const int *x = elem0;
+    const int *y = elem1;
+
+    return x - y;
+}
+
+void da_sort(DynArray *arr, int (* pred)(const void *, const void *))
+{
+    qsort(arr->data, arr->size, arr->dataSize, pred);
+}
