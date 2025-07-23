@@ -1,5 +1,4 @@
 /*
-
     PROGRAM: //////////////////////////////////////////////////////////////////////
 
     Write a program that measures the time required to create and then remove a
@@ -32,85 +31,34 @@
 
 /*
 
-   PERFORMANCE METRICS:
+PERFORMANCE METRICS (order of 1'000, 5'000, 10'000, and 20'000 files):
 
-FS ext2 (Random order of deletion):
-    1'000  Files: 0.00user 0.77system 0:00.78elapsed 99%CPU
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS ext2 (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
+Unordered deletion
 
-Patterns:
+Testing ext2_fs...
+Elapsed:0.42 System:0.41 User:0.00 CPU:99% (0 11856)
+Elapsed:1.48 System:1.47 User:0.00 CPU:99% (0 40008)
+Elapsed:3.41 System:3.38 User:0.01 CPU:99% (0 84112)
+Elapsed:5.13 System:5.08 User:0.01 CPU:99% (0 164136)
 
-FS ext3 (Random order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS ext3 (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
+Testing ext3_fs...
+Elapsed:0.03 System:0.03 User:0.00 CPU:97% (0 8000)
+Elapsed:0.17 System:0.16 User:0.00 CPU:98% (0 40000)
+Elapsed:0.36 System:0.34 User:0.00 CPU:98% (0 80000)
+Elapsed:0.79 System:0.76 User:0.01 CPU:98% (0 160000)
 
-Patterns:
+Testing ext4_fs...
+Elapsed:0.03 System:0.02 User:0.00 CPU:100% (0 8000)
+Elapsed:0.15 System:0.14 User:0.00 CPU:98% (0 40000)
+Elapsed:0.32 System:0.31 User:0.00 CPU:98% (0 80000)
+Elapsed:0.72 System:0.68 User:0.02 CPU:98% (0 160000)
 
-FS ext4 (Random order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS ext4 (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
+Testing xfs_fs...
+Elapsed:0.04 System:0.04 User:0.00 CPU:86% (0 8000)
+Elapsed:0.34 System:0.21 User:0.00 CPU:62% (0 40000)
+Elapsed:1.52 System:0.39 User:0.01 CPU:27% (0 80000)
+Elapsed:1.99 System:0.83 User:0.01 CPU:42% (0 160000)
 
-Patterns:
-
-FS xfs (Random order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS xfs (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-
-Patterns:
-
-FS btrfs (Random order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS btrfs (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-
-Patterns:
-
-FS tmpfs (Random order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-FS tmpfs (Consistent order of deletion):
-    1'000  Files:
-    5'000  Files:
-    10'000 Files:
-    20'000 Files:
-
-Patterns:
 */
 
 #include <stdlib.h>
@@ -124,6 +72,7 @@ Patterns:
 
 #include "../lib/error_functions.h"
 #include "../lib/dynamic_array.h"
+#include "../lib/utils.h"
 
 struct FileInfo
 {
@@ -131,53 +80,6 @@ struct FileInfo
     int fd;
     char path[4096];
 };
-
-int file_type_exists(const char *path)
-{
-    struct stat sb;
-    if (stat(path, &sb) == -1)
-        errExit("stat");
-
-    // return (sb.st_mode & S_IFMT) == S_IFREG;
-    return S_ISREG(sb.st_mode);
-}
-
-int directory_exists(const char *path)
-{
-    struct stat sb;
-    if (stat(path, &sb) == -1)
-        errExit("stat");
-
-    // return (sb.st_mode & S_IFMT) == S_IFDIR;
-    return S_ISDIR(sb.st_mode);
-}
-
-char digitToChar(int num)
-{
-    if (num < 0 || num > 9)
-        return '\0';
-
-    return (char)(num + 48);
-}
-
-void numToStr(int num, char *buf)
-{
-    size_t index = 0;
-    char reverseBuf[4096];
-    while (num > 0) {
-        int digit = num % 10;
-        num /= 10;
-
-        reverseBuf[index] = digitToChar(digit);
-
-        ++index;
-    }
-
-    for (size_t i = index - 1, y = 0; (int)i >= 0; --i, ++y)
-        buf[i] = reverseBuf[y];
-
-    buf[index] = '\0';
-}
 
 int fileSort(const void *a, const void *b)
 {
@@ -241,13 +143,15 @@ int main(int argc, char** argv) {
         fileInfo->number = randomNumber;
     }
 
-    da_sort(&fileList, &fileSort);
+    da_sort(&fileList, fileSort);
 
     for (size_t i = 0; i < fileList.size; ++i) {
         struct FileInfo *fileInfo = da_get(&fileList, i);
         unlink(fileInfo->path);
         close(fileInfo->fd);
     }
+
+    da_free(&fileList);
 
     printf("Created and destroyed %zu files.\n", fileList.size);
 
@@ -260,6 +164,4 @@ int main(int argc, char** argv) {
 
     printf("user:%.2f system:%.2f cpu_total:%.2f\n", userTime, systemTime,
         userTime + systemTime);
-
-    da_free(&fileList);
 }
