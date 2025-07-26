@@ -31,3 +31,5 @@
 - Review 15.4.7 exploit prevention via clearing of set gid function.
 
 - Write a c program for exersize 15-1. b)
+
+- Review TLPI answers repo for more robust solution of exersize 3.
