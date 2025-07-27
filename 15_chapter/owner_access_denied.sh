@@ -1,6 +1,7 @@
 #!/bin/bash
 
 file=myfile
+PERMISSIONS=(000 100 200 300 400 500 600 700)
 
 echo "Clearing subshell umask and creating file..."
 
