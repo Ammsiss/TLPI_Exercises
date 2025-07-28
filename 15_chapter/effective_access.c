@@ -25,11 +25,14 @@ Example:
         -> Checks if the executing process can read and execute 'myfile.txt'.
 */
 
+#define _GNU_SOURCE
+
 #include <stdint.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <limits.h>   /* for NGROUPS_MAX */
 
 #include "error_functions.h"
 
@@ -48,20 +51,38 @@ struct Group {
     int other;
 };
 
+int groupAccess(const struct stat *sb)
+{
+    gid_t grouplist[NGROUPS_MAX + 1];   /* + 1 becuase may contain effective gid */
+    int numGroups = getgroups(NGROUPS_MAX + 1, grouplist);
+
+    for (int i = 0; i < numGroups; ++i) {
+        if (grouplist[i] == sb->st_gid)
+            return 1;
+    }
+
+    return 0;
+}
+
 int checkPermGroup(const struct Group permGroup, const struct stat *sb)
 {
     uid_t uid = geteuid();
     gid_t gid = getegid();
 
-    if (uid == sb->st_uid) {
+    if (uid == sb->st_uid) {   /* If owner check user permission */
         if (!(sb->st_mode & permGroup.user))
             return -1;
-    } else if (gid == sb->st_gid) {
+        return 0;
+    }
+
+    if (gid == sb->st_gid && groupAccess(sb)) {   /* If group check group permission */
         if (!(sb->st_mode & permGroup.group))
             return -1;
-    } else if (!(sb->st_mode & permGroup.other))
-        return -1;
+        return 0;
+    }
 
+    if (!(sb->st_mode & permGroup.other))   /* If neither check other permission */
+        return -1;
     return 0;
 }
 
@@ -74,10 +95,14 @@ int effective_access(const char* filename, const uint8_t flags)
     if (stat(filename, &sb) == -1) {
         if (errno == EACCES)   /* No execute perms on one of the dir's in the path prefix */
             return -1;
-        else if (errno == ENOENT) {   /* A portion of the pathname doesn't exist */
+        else if (errno == ENOENT) {   /* File or portion of path doesn't exist */
             return -1;
-        }
+        } else
+            return -1;
     }
+
+    if (flags & EXIST)   /* If only cares about existence return early */
+        return 1;
 
     struct Group permGroups[3] = {
         { .user = S_IRUSR, .group = S_IRGRP, .other = S_IROTH }, // Read

@@ -36,7 +36,3 @@
 
 - Review ```sysdeps/posix/euidaccess.c``` which is a GNU C libarary implementation
   of exersise 15-4.
-
-- Added supplementary group checks to ```effective_access.c```. Also implement
-  the -e option (Maybe just early returns?)
-
