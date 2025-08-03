@@ -15,7 +15,7 @@
 
 **acl_get_permset(3)** -> Retrieves the perm set from an ACL entry
     Related: acl_set_permset(3), acl_add_perm(3), acl_delete_perm(3),
-    acl_clear_perms(3)
+    acl_clear_perms(3), acl_get_perm(3)
 
 **acl_create_entry(3)** -> Creates a new entry in an existing ACL
     Related: acl_delete_entry(3)
@@ -45,3 +45,6 @@
   ing information about ACLs at http://acl.bestbits.at/.
 
 ## TODO
+
+[] Add a check for uid/gid 0 for exersise 17-1.
+[] Confirm that there is NO union of permissions from the named group + group owner entries.
