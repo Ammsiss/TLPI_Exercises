@@ -51,7 +51,7 @@ static void usageErr(const char *progName, const char *msg)
 }
 
 static int dirTree(const char *pathname, const struct stat *sbuf, int type,
-        struct FTW *ftwb)   /* Function called by nftw() */
+    struct FTW *ftwb)   /* Function called by nftw() */
 {
     if (type == FTW_NS) {   /* Could not stat() file */
         printf("?");
