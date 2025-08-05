@@ -25,6 +25,8 @@ When you recompile the program it simply removes and replaces the hard
 link stored in the directory, hence why the inode number changes.
 The original executable itself is never modified.
 
+## Ex. 18-2
+
 **Question**
 
 Why does the call to chmod() in the following code fail?
@@ -39,10 +41,22 @@ chmod("../mylink", S_IRUSR);
 
 **Answer**
 
+
+
+## Ex. 18-3
+
+**Question**
+
+Implement *realpath(3)*
+
+**Answer**
+
 'mylink' is a dangling link. The call to symlink() resolves the
 relative path, 'myfile', from where the link is stored not where
 symlink() is executed thus the subsequent call to chmod fails with
 **ENOENT**. (chmod does not operator on sym links)
+
+## Ex. 18-4
 
 **Question**
 
@@ -52,6 +66,8 @@ instead of readdir().
 **Answer**
 
 See *ls_readdir_r.c*
+
+## Ex. 18-5
 
 **Question**
 
@@ -76,6 +92,39 @@ purpose).
 
 See *imp_getcwd.c*
 
+I ran into a tricky issue with this problem. Initially I compared the inode
+stored in the dirent structure with the inode stored in the stat structure
+but this does not work. The inode in the dirent structure never reflects
+mount-points on the directory, so it will disagree with the inode reported
+by **stat(2)**, which *does* follow mounts.
+
+Heres an example of the problem that occurred with the /home mount point.
+```cpp
+
+/* This compares the original inode number of "home" with the root inode
+   of the /home file-system. Not the same!
+
+   On my filesystem (Btrfs) the default root inode was 256. but the original
+   directory inode was 259. */
+
+if (entry->d_ino == current_sb.st_ino) { // mismatch at a mount point
+
+struct stat entry_sb;
+if (stat(entry->d_name, &entry_sb) == -1)
+    errExit("stat");
+
+    if (entry_sb.st_dev == current_sb.st_dev) {
+        printf("%s\n", entry->d_name);
+        break;
+    }
+}
+```
+
+To fix this I simply called stat on every entry and compared the 2 stat entries
+as shown in the implementation.
+
+## Ex. 18-6
+
 **Question**
 
 Modify the program in Listing 18-3 (nftw_dir_tree.c) to use the FTW_DEPTH flag. Note
@@ -84,6 +133,8 @@ the difference in the order in which the directory tree is traversed.
 **Answer**
 
 
+
+## Ex. 18-7
 
 **Question**
 
@@ -95,6 +146,8 @@ symbolic link, and so on) of files in the tree.
 
 
 
+## Ex. 18-8
+
 **Question**
 
 Implement nftw(). (This will require the use of the opendir(), readdir(), closedir(), and
@@ -103,6 +156,8 @@ stat() system calls, among others.)
 **Answer**
 
 
+
+## Ex. 18-9
 
 **Question**
 
@@ -113,3 +168,5 @@ operation repeatedly. Which method do you expect to be more efficient? Why?
 Write a program to confirm your answer.
 
 **Answer**
+
+

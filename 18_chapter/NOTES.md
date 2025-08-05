@@ -77,3 +77,7 @@ relative pathnames.
   *list_files.c*
 
 ## TODO
+
+- For **imp_getcwd.c** add the glibc wrapper feature of allowing the user
+  to pass in NULL for 'cwdbuf' which causes the function to allocate the
+  buffer (as large as needed, up to 4096 bytes) for the user.
