@@ -33,10 +33,14 @@ Description:
 
 char *imp_getcwd(char *cwdbuf, size_t size)
 {
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, PATH_MAX) == NULL)
+        return NULL;
+
     DynArray pathComponents;
     da_init(&pathComponents, 0, NAME_MAX + 1);
 
-    int pathLength = 1;   /* Check size against pathname including terminating null byte */
+    size_t pathLength = 1;   /* Check size against pathname including terminating null byte */
 
     while (1) {
 
@@ -120,14 +124,25 @@ char *imp_getcwd(char *cwdbuf, size_t size)
 
     da_free(&pathComponents);
 
+    if (chdir(cwd) == -1)
+        errExit("chdir");
+
     return cwdbuf;
 }
 
 int main(void)
 {
+    char *cwd = getcwd(NULL, 0);
+    printf("%s\n", cwd);
+    free(cwd);
+
     char path[PATH_MAX + 1];   /* + 1 for null byte */
     if (imp_getcwd(path, PATH_MAX + 1) == NULL)
         errExit("imp_getcwd");
 
-    printf("%s\n", path);
+    // printf("%s\n", path);
+
+    cwd = getcwd(NULL, 0);
+    printf("%s\n", cwd);
+    free(cwd);
 }

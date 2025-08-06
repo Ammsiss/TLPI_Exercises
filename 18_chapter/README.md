@@ -41,7 +41,10 @@ chmod("../mylink", S_IRUSR);
 
 **Answer**
 
-
+'mylink' is a dangling link. The call to symlink() resolves the
+relative path, 'myfile', from where the link is stored not where
+symlink() is executed thus the subsequent call to chmod fails with
+**ENOENT**. (chmod does not operator on sym links)
 
 ## Ex. 18-3
 
@@ -51,10 +54,7 @@ Implement *realpath(3)*
 
 **Answer**
 
-'mylink' is a dangling link. The call to symlink() resolves the
-relative path, 'myfile', from where the link is stored not where
-symlink() is executed thus the subsequent call to chmod fails with
-**ENOENT**. (chmod does not operator on sym links)
+See *imp_realpath.c*
 
 ## Ex. 18-4
 
@@ -132,7 +132,15 @@ the difference in the order in which the directory tree is traversed.
 
 **Answer**
 
+The program already has the functionality to use the FTW_DEPTH flag. Simply pass in
+'d' as a command line argument.
 
+This causes a post order traversal meaning that the contents of a directory are proc-
+essed before the directory itself.
+
+Note that this does not enforce any ordering of siblings. For example if you have a file
+and a subdirectory in the same nesting level, the file may be processed before the sub-
+directories children.
 
 ## Ex. 18-7
 
@@ -169,4 +177,30 @@ Write a program to confirm your answer.
 
 **Answer**
 
+See *chdir_vs_fchdir.c* for the test program.
 
+I will assume that the version calling getcwd will be more preformant as there
+is probably a more significant cost to repeatedly allocating and freeing a file
+discriptor as it invokes kernal level processes.
+
+My test seems to agree as the system time is elevated quite a bit.
+
+```bash
+Method 1 (Using buffer):
+System: 0.2100   User: 0.0100
+Method 2 (Using fd):
+System: 0.3200   User: 0.0200
+```
+
+This assumes that the path name resolution is not very expensive though. For example
+I ran the same test program nested within 100 directories with the following results.
+
+```bash
+Method 1 (Using buffer):
+System: 4.8900   User: 0.0100
+Method 2 (Using fd):
+System: 0.3400   User: 0.0300
+```
+
+fchdir is also the safer option as the original directory can be renamed or moved and
+fchdir will still succeed.
