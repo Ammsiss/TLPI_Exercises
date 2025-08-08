@@ -78,8 +78,13 @@ relative pathnames.
 
 ## TODO
 
+- For **imp_realpath.c** handle readlink truncation and figure out why
+  the buffer being PATH_LENGTH + 1 is unessesary.
+
 - For **imp_getcwd.c** add the glibc wrapper feature of allowing the user
   to pass in NULL for 'cwdbuf' which causes the function to allocate the
   buffer (as large as needed, up to 4096 bytes) for the user.
 
 - For **exersise 18-4, 18-7, 18-9 checkout the solution in the TLPI book.
+
+- For **imp_nftw.c** implement iteratively, and also add rest of features.

@@ -139,7 +139,7 @@ This causes a post order traversal meaning that the contents of a directory are 
 essed before the directory itself.
 
 Note that this does not enforce any ordering of siblings. For example if you have a file
-and a subdirectory in the same nesting level, the file may be processed before the sub-
+and a subdirectory in the same directory level, the file may be processed before the sub-
 directories children.
 
 ## Ex. 18-7
@@ -152,7 +152,7 @@ symbolic link, and so on) of files in the tree.
 
 **Answer**
 
-
+See *tree_info.c*
 
 ## Ex. 18-8
 
@@ -163,7 +163,7 @@ stat() system calls, among others.)
 
 **Answer**
 
-
+See *imp_nftw.c*
 
 ## Ex. 18-9
 

@@ -1,92 +1,112 @@
 /*
-    - Dereference all symbolic links in 'pathname' (a null terminated string)
-      and resolve all references to /. and /..
+Name:
+    imp_realpath
 
-    - Resolved path is a buffer of at least PATH_MAX bytes
+SYNOPSIS:
+    char *imp_realpath(const char *pathname, char *resolved_path)
 
-    - On success return pointer to resolved_path
+Description:
+    This implementation was created as a solution to TLPI exersise 18-3.
 
-    - (Optional) Add glibc function feature of passing in NULL for buf to make
-      function allocate for you.
+    This program resolves any relative directories (., ..) and symlinks,
+    assinging the resulting absolute path into the 'resolved_path' buffer
+    which must be at least PATH_MAX + 1 bytes long.
 
+    On success the function returns a pointer to the buffer.
 
+    On error the function returns NULL and sets errno to the appropriate
+    value.
 */
+
+#define _XOPEN_SOURCE 500
 
 #include <errno.h>
 #include <linux/limits.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <libgen.h>
 
-#include "../lib/dynamic_array.h"
 #include "../lib/error_functions.h"
 
-void charcat(char *str, char c)
+char *chDir(const char *pathname, char *resolved_path)
 {
-    char cstr[2];
-    cstr[0] = c;
-    cstr[1] = '\0';
+    char base_cpy[PATH_MAX + 1];
+    strcpy(base_cpy, pathname);
+    char* basepart = basename(base_cpy);
 
-    strcat(str, cstr);
+    char dir_cpy[PATH_MAX + 1];
+    strcpy(dir_cpy, pathname);
+    char* dirpart = dirname(dir_cpy);
+
+    if (chdir(dirpart) == -1)
+        return NULL;
+
+    char realpath[PATH_MAX + 1];
+    if (getcwd(realpath, PATH_MAX + 1) == NULL)
+        return NULL;
+
+    strcpy(resolved_path, realpath);
+    strcat(resolved_path, "/");
+    strcat(resolved_path, basepart);
+
+    return resolved_path;
 }
 
-int isdir(const char *path)
-{
-    struct stat sb;
-    if (stat(path, &sb) == -1)
-        return -1;
+// Not handling readlink truncation //
 
-    return S_ISDIR(sb.st_mode);
-}
-
-/* Doesn't work for links */
 char *imp_realpath(const char *pathname, char *resolved_path)
 {
-    char *cwd = getcwd(NULL, 0);
+    char cwd[PATH_MAX + 1];
+    if (getcwd(cwd, PATH_MAX + 1) == NULL)
+        return NULL;
 
-    if (pathname[0] == '/')
-        if (chdir("/") == -1)
-            return NULL;
+    if (chdir(pathname) == -1) {
+        if (errno == ENOTDIR) {
+            struct stat sb;
+            if (lstat(pathname, &sb) == -1)
+                return NULL;
 
-    char link_value[PATH_MAX];
-    char comp[NAME_MAX + 1] = "";
-    for(const char *c = pathname; *c != '\0'; ++c) {
-        if (*c == '/') {
-            if (strcmp(comp, "") != 0) {
-                if (isdir(comp)) {
-                    if (chdir(comp) == -1)
-                        return NULL;
-                    strcpy(comp, "");
-                }
+            switch (sb.st_mode & S_IFMT) {
+            case S_IFLNK:
+            {
+                char link_content[PATH_MAX + 1];
+                int numRead = readlink(pathname, link_content, PATH_MAX + 1);
+                if (numRead == -1)
+                    return NULL;
+                link_content[numRead] = '\0';
+
+                char path_cpy[PATH_MAX + 1];
+                strcpy(path_cpy, pathname);
+                char *dirpart = dirname(path_cpy);
+
+                if (chdir(dirpart) == -1)
+                    return NULL;
+
+                imp_realpath(link_content, resolved_path);
+
+                break;
+            }
+            default:
+            {
+                chDir(pathname, resolved_path);
+                break;
+            }
             }
         } else {
-            charcat(comp, *c);
+            return NULL;
         }
-    }
+    } else {
+        char realpath[PATH_MAX + 1];
+        if (getcwd(realpath, PATH_MAX + 1) == NULL)
+            return NULL;
 
-    char *filepath = NULL;
-    if (strcmp(comp, "") != 0) {
-        if (isdir(comp)) {
-            if (chdir(comp) == -1)
-                return NULL;
-        } else {
-            filepath = comp;
-        }
-    }
-
-    char *realpath = getcwd(NULL, 0);
-    strcpy(resolved_path, realpath);
-
-    if (filepath) {
-        strcat(resolved_path, "/");
-        strcat(resolved_path, filepath);
+        strcpy(resolved_path, realpath);
     }
 
     if (chdir(cwd) == -1)
-        errExit("chdir");
-
-    free(cwd);
-    free(realpath);
+        return NULL;
 
     return resolved_path;
 }
@@ -94,7 +114,7 @@ char *imp_realpath(const char *pathname, char *resolved_path)
 int main(void)
 {
     char realpath[PATH_MAX + 1];
-    if (imp_realpath("./link", realpath) == NULL)
+    if (imp_realpath("/home//////", realpath) == NULL)
         errExit("imp_realpath");
 
     printf("%s\n", realpath);
