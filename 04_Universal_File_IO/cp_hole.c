@@ -1,6 +1,17 @@
-////////////////////////////////////////////////////////////////////////
-// 4.10 - 4-2. CP CLONE MAINTAINS FILE HOLES
-////////////////////////////////////////////////////////////////////////
+/*
+Name:
+    cp_hole
+
+Synopsis:
+    cp_hole file1 file2
+
+Description:
+    This program copies the contents of file1 to file2, creating it
+    if it doesn't exist. If file1 contains any holes, corresponding
+    holes are also created in file2.
+
+    This program was created as a solution to TLPI exersise 4-2.
+*/
 
 #define _GNU_SOURCE
 

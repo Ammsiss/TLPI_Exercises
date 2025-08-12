@@ -1,6 +1,18 @@
-////////////////////////////////////////////////////////////////////////
-// 4.10 - 4-1. SIMPLE TEE CLONE
-////////////////////////////////////////////////////////////////////////
+/*
+Name:
+    imp_tee
+
+Synopsis:
+    imp_tee [OPTIONS] [file]
+
+    -a, Append to file if it already exists
+
+Description:
+    This program reads from its standard input and writes it to
+    stdout as well as a file named in its command line arguments.
+
+    This program was created as a solution to TLPI exersise 4-1.
+*/
 
 #define _GNU_SOURCE
 
@@ -47,7 +59,7 @@ int main(int argc, char** argv)
 
         break;
     default:
-        fprintf(stderr, "%s [-a] [file]\n", argv[0]);
+        fprintf(stderr, "%s [OPTIONS] [file]\n", argv[0]);
         break;
     }
 
