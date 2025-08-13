@@ -9,3 +9,6 @@
 - Add a string <-> character comparison function. One that takes a
   string of individual characters and compares each one to a single
   specified character.
+
+- Finish standardizing chapters. (rename, add readme and notes, and
+  change exersise filenames)
