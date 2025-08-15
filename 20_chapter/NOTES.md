@@ -31,6 +31,8 @@
 
 **sigpending(2)** -> Returns the set of pending signals
 
+**pause(2)** -> Suspend until a signal arrives
+
 ## Tables
 
 See **Table 20-1** for various information about linux signals.

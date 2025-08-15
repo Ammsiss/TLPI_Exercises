@@ -1,0 +1,58 @@
+/*************************************************************************\
+*                  Copyright (C) Michael Kerrisk, 2019.                   *
+*                                                                         *
+* This program is free software. You may use, modify, and redistribute it *
+* under the terms of the GNU General Public License as published by the   *
+* Free Software Foundation, either version 3 or (at your option) any      *
+* later version. This program is distributed without any warranty.  See   *
+* the file COPYING.gpl-v3 for details.                                    *
+\*************************************************************************/
+
+/* Listing 22-2 */
+
+/* t_sigqueue.c
+
+   Demonstrate the use of sigqueue() to send a (realtime) signal.
+
+   Usage: t_sigqueue pid sig data num-sigs
+
+   Send 'num-sigs' instances of the signal 'sig' (specified as an integer), with
+   accompanying data 'data' (an integer), to the process with the PID 'pid'.
+
+   Modified by Junji Tai 2025
+*/
+
+#define _POSIX_C_SOURCE 199309
+
+#include <signal.h>
+#include <unistd.h>
+
+#include "../lib/error_functions.h"
+#include "../lib/utils.h"
+
+int main(int argc, char **argv)
+{
+    if (argc < 4 || strcmp(argv[1], "--help") == 0)
+        usageErr("%s pid sig-num data [num-sigs]\n", argv[0]);
+
+    /* Display our PID and UID, so that they can be compared with the
+       corresponding fields of the siginfo_t argument supplied to the
+       handler in the receiving process */
+
+    printf("%s: PID is %ld, UID is %ld\n", argv[0],
+            (long) getpid(), (long) getuid());
+
+    int pid = getNum(argv[1]);
+    int sig = getNum(argv[2]);
+    int sigData = getNum(argv[3]);
+    int numSigs = (argc > 4) ? getNum(argv[4]) : 1;
+
+    union sigval sv;
+    for (int j = 0; j < numSigs; j++) {
+        sv.sival_int = sigData + j;
+        if (sigqueue(pid, sig, sv) == -1)
+            errExit("sigqueue %d", j);
+    }
+
+    exit(EXIT_SUCCESS);
+}

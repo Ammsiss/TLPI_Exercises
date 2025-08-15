@@ -12,3 +12,5 @@
 
 - Finish standardizing chapters. (rename, add readme and notes, and
   change exersise filenames)
+
+- Replace replace use of strtol with util function in all relevant files

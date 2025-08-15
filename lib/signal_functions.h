@@ -20,6 +20,7 @@
 #define SIGNAL_FUNCTIONS_H
 
 #define _GNU_SOURCE
+
 #include <stdio.h>
 #include <sys/types.h>
 

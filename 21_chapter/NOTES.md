@@ -7,7 +7,6 @@
 
 **sigaltstack(3)** -> Create or retrieve an alternative signal stack
 
-
 ## Tables
 
 See **Table 21-1** for functions required to be async-signal-safe by by various standards.

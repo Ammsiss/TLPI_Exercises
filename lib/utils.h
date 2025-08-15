@@ -10,6 +10,15 @@
 #include "dynamic_array.h"
 #include "error_functions.h"
 
+inline static int getNum(const char *numStr)
+{
+    char *end;
+    int num = strtol(numStr, &end, 10);
+    if (*end != '\0')
+        errExit("strtol");
+    return num;
+}
+
 inline static char* fgetstr(int fd)
 {
     DynArray chars;
