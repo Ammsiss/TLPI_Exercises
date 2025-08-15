@@ -6,15 +6,19 @@
 #include <unistd.h>
 
 #include "../lib/error_functions.h"
-#include "../lib/utils.h"
 
 volatile sig_atomic_t newMessage = 0;
-volatile sig_atomic_t message = 0;
+
+char mess[1000];
 
 void handler(int sig, siginfo_t *si, void *ucontext)
 {
     newMessage = 1;
-    message = si->si_value.sival_int;
+
+    char letter[2];
+    letter[0] = si->si_value.sival_int;
+    letter[1] = '\0';
+    strcat(mess, letter);
 }
 
 int main(void)
@@ -48,15 +52,19 @@ int main(void)
                 continue;
             } else {
                 union sigval sv;
-                sv.sival_int = getNum(end + 1);
-                if (sigqueue(pid, SIGRTMIN, sv) == -1)
-                    errExit("sigqueue");
+
+                for ( char *startMes = end + 1; *startMes != '\0'; ++startMes) {
+                    sv.sival_int = *startMes;
+                    if (sigqueue(pid, SIGRTMIN, sv) == -1)
+                        errExit("sigqueue");
+                }
             }
         }
 
-        if (newMessage) {
-            printf("Message: %d\n", message);
+        if (newMessage) {   /* sleep() could help if losing data */
+            printf("Message: %s\n", mess);
             newMessage = 0;
+            strcpy(mess, "");
         }
     }
 
