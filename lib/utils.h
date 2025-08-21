@@ -10,12 +10,12 @@
 #include "dynamic_array.h"
 #include "error_functions.h"
 
-inline static int getNum(const char *numStr)
+inline static int getNum(const char *numStr, char *msg)
 {
     char *end;
     int num = strtol(numStr, &end, 10);
     if (*end != '\0')
-        errExit("strtol");
+        errExit("%s", (msg == NULL) ? "strtol" : msg);
     return num;
 }
 

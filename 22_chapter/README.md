@@ -67,3 +67,11 @@ sigpause() using the POSIX signal API.
 **Answer**
 
 See *system_v_funcs.c*
+
+## Extra
+
+As a mini capstone project on signals I decided to create a program that allows 2
+processes (on the same machine) to send messages to each other using only signals.
+This is purely educational, signals are not a good choice for IPC, See section 22.12.
+
+See *signal_messaging.c*
