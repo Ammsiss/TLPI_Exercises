@@ -95,7 +95,7 @@ void* da_push(DynArray *arr)
         if (arr->capacity == 0) capacity = 1;
         else                    capacity = arr->capacity * 2;
 
-        void *temp = arr->data;
+        void *temp;
         temp = realloc(arr->data, capacity * arr->dataSize);
         if (temp == NULL)
             return NULL;

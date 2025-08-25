@@ -12,7 +12,7 @@ void printWaitStatus(const char *msg, int status)
         printf("%s", msg);
 
     if (WIFEXITED(status)) {
-        printf("child exited normally, status %d\n", WEXITSTATUS(status));
+        printf("child exited normally, exit status %d\n", WEXITSTATUS(status));
     } else if (WIFSIGNALED(status)) {
         printf("child caught signal %d (%s)", WTERMSIG(status),
                 strsignal(WTERMSIG(WTERMSIG(status))));
