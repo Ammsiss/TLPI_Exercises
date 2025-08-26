@@ -13,11 +13,28 @@ inline static void errExit(const char *fmt, ...)
 inline static void errExit(const char *fmt, ...)
 {
     va_list args;
+
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
     va_end(args);
 
     fprintf(stderr, ": %s\n", strerror(errno));
+
+    exit(EXIT_FAILURE);
+}
+
+inline static void errExitEN(int errnum, const char *fmt, ...)
+    __attribute__((format(printf, 2, 3), noreturn));
+
+inline static void errExitEN(int errnum, const char *fmt, ...)
+{
+    va_list args;
+
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+
+    fprintf(stderr, ": %s\n", strerror(errnum));
 
     exit(EXIT_FAILURE);
 }
