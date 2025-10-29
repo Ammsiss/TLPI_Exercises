@@ -1,9 +1,4 @@
-////////////////////////////////////////////////////////////////////////
-// 5.14 - 5-6. writev() & readv() clones
-////////////////////////////////////////////////////////////////////////
-
 /*
-
    Initially I thought that I should verify the fd flags before processing
    but this is actually unecessary as you can simply rely on the open and
    write syscalls to handle setting errno and returning the correct value.

@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////////////////
-// 5.14 - 5-5. Verify shared data between process fd's
-////////////////////////////////////////////////////////////////////////
-
 /*
 There are a couple ways to verify that duplicated process fd's that point
 to the same open file description, share the same file offset and open file

@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////////////////
-// 5.14 - 5-3. Why atomicity with O_APPEND is necessary.
-////////////////////////////////////////////////////////////////////////
-
 #define _GNU_SOURCE
 
 #include <stdlib.h>
@@ -17,13 +13,13 @@ int main(int argc, char** argv)
     if (argc != 3 && argc != 4)
         fprintf(stderr, "atomic_append filename num-bytes [x]1\n");
 
-    bool noAppend = false;
+    int noAppend = 0;
     if (argc == 4)
     {
         if (strcmp(argv[3], "x") != 0)
             fprintf(stderr, "atomic_append filename num-bytes [x]2\n");
 
-        noAppend = true;
+        noAppend = 1;
     }
 
     int flags = O_WRONLY | O_CREAT;
