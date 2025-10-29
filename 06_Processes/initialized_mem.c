@@ -1,17 +1,12 @@
-////////////////////////////////////////////////////////////////////////
-// 6.10 - 6-1.
 /*
+    On executino of ls -l the size of the binary is very small (~10kb) even
+    though we allocate an array of 10MB. This is becuase the array is stored
+    in bss where it is not actually phsically allocated. This allows the binary
+    to remain lean.
 
-On executino of ls -l the size of the binary is very small (~10kb) even
-though we allocate an array of 10MB. This is becuase the array is stored
-in bss where it is not actually phsically allocated. This allows the binary
-to remain lean.
-
-If you initialize the array then the binary WILL grow as it will be stored in
-the data segment of memory.
-
+    If you initialize the array then the binary WILL grow as it will be stored in
+    the data segment of memory.
 */
-////////////////////////////////////////////////////////////////////////
 
 #define _BSD_SOURCE
 
