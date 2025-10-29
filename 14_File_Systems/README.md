@@ -1,4 +1,28 @@
-## Chapter 14
+# Chapter 14: Exercises
+## Ex. 14-1
+
+**Question**
+
+Write a program that measures the time required to create and then remove a
+large number of 1-byte files from a single directory. The program should create
+files with names of the form xNNNNNN, where NNNNNN is replaced by a random six-digit
+number. The files should be created in the random order in which their names are
+generated, and then deleted in increasing numerical order (i.e., an order that is
+different from that in which they were created). The number of files (NF) and the
+directory in which they are to be created should be specifiable on the command
+line. Measure the times required for different values of NF (e.g., in the range from
+1000 to 20,000) and for different file systems (e.g., ext2, ext3, and XFS). What
+patterns do you observe on each file system as NF increases? How do the various
+file systems compare? Do the results change if the files are created in increasing
+numerical order (x000001, x000001, x0000002, and so on) and then deleted in the same
+order? If so, what do you think the reason(s) might be? Again, do the results vary
+across file-system types?
+
+**Answer**
+
+See *fs_stress_test.c*
+
+# NOTES
 
 ### Syscalls
 
@@ -75,7 +99,7 @@ Writing superblocks and filesystem accounting information: done
 $ sudo blkid /dev/sda1
 /dev/sda1: UUID="feed656d-1bd4-4d8b-8bce-dc72f8e2b90c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="09bbe621-6502-422a-b891-58b389a90286"
 
-## TODO
+# TODO
 
 - Write a program that calculates the level of indirection and index
   of the inode pointer for a given offset and blocksize.

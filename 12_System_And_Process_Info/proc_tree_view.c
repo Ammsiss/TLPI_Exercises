@@ -1,7 +1,3 @@
-////////////////////////////////////////////////////////////////////////
-// 12.4 - 12-2. Hierarchial process view
-////////////////////////////////////////////////////////////////////////
-
 /*
  * Write a program that draws a tree showing the hierarchical parent-child
  * relationships of all processes on the system, going all the way back to init.

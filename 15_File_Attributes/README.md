@@ -31,11 +31,11 @@ That is if the effective uid of the process matches the uid of the file then the
 permissions are granted based on the owner permissions of the file even if they are
 less permissive then the group or other permissions.
 
-For a shell script verifying this behaviour see ```owner_access_denied.sh```
-For a c program verifying this behaviour see ```owner_access_denied.c```
+For a shell script verifying this behaviour see *owner_access_denied.sh*
+For a c program verifying this behaviour see *owner_access_denied.c*
 
-b) For a shell script veryifing this behaviour see ```read_only_dir.sh```
-For a c program veryifing this behaviour see ```read_only_dir.c```
+b) For a shell script veryifing this behaviour see *read_only_dir.sh*
+For a c program veryifing this behaviour see *read_only_dir.c*
 
 c) In order to create a new file you must have write and execute permissions on the
 parent directory.
@@ -59,7 +59,7 @@ to overwrite it.
 If the sticky bit is set you cannot overwrite the file unless you own it or the parent
 directory.
 
-For scripts verifying some of these assertions see ```perm_tests.sh```
+For scripts verifying some of these assertions see *perm_tests.sh*
 
 ## Ex. 15-2
 
@@ -86,7 +86,7 @@ that the file timestamps are displayed with nanosecond accuracy.
 
 **Answer**
 
-See ```t_stat_nano.c```
+See *t_stat_nano.c*
 
 ## Ex. 15-4
 
@@ -98,7 +98,7 @@ process’s effective user and group IDs.
 
 **Answer**
 
-See ```effective_access.c```
+See *effective_access.c*
 
 
 ## Ex. 15-5
@@ -114,7 +114,7 @@ process umask while leaving it unchanged?
 You could assing the return value of umask() to a variable and then call umask again
 with the value of that variable. For example:
 
-```
+```c
 mode_t umaskValue = umask(0); // Get and clear umask
 umask(umaskValue);            // Reassign old umask
 ```
@@ -128,7 +128,7 @@ and likewise enables execute permission for all categories of user if file is a 
 or execute permission is enabled for any of the user categories for file, as
 demonstrated in the following example:
 
-```
+```bash
 $ ls -ld dir file prog
 dr-------- 2 mtk users 48 May 4 12:28 dir
 -r-------- 1 mtk users 19794 May 4 12:22 file
@@ -143,7 +143,7 @@ dr-xr-xr-x 2 mtk users 48 May 4 12:28 dir
 
 **Answer**
 
-See ```arX_mod.c```
+See *arX_mod.c*
 
 ## Ex. 15-7
 
@@ -155,4 +155,4 @@ don’t need to implement the –R, –V, and –v options.)
 
 **Answer**
 
-See ```imp_chattr.c```
+See *imp_chattr.c*
