@@ -3,3 +3,4 @@ compile_commands.json
 playground/
 *.bin
 .clangd
+ename.c.inc

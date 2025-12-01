@@ -7,68 +7,18 @@
 #include <string.h>
 #include <stdarg.h>
 
-inline static void errExit(const char *fmt, ...)
-    __attribute__((format(printf, 1, 2), noreturn));
+/* This attribute style is only
+ * supported if __GNUC__ is defined */
 
-inline static void errExit(const char *fmt, ...)
-{
-    va_list args;
+#define NORETURN __attribute__ ((__noreturn__))
+#define PFFORMAT(x, y) __attribute__ ((format(printf, (x), (y))))
 
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    fprintf(stderr, ": %s\n", strerror(errno));
-
-    exit(EXIT_FAILURE);
-}
-
-inline static void errExitEN(int errnum, const char *fmt, ...)
-    __attribute__((format(printf, 2, 3), noreturn));
-
-inline static void errExitEN(int errnum, const char *fmt, ...)
-{
-    va_list args;
-
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    fprintf(stderr, ": %s\n", strerror(errnum));
-
-    exit(EXIT_FAILURE);
-}
-
-inline static void usageErr(const char *fmt, ...)
-    __attribute__((format(printf, 1, 2), noreturn));
-
-inline static void usageErr(const char *fmt, ...)
-{
-    fprintf(stderr, "Usage: ");
-
-    va_list args;
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    fprintf(stderr, "\n");
-
-    exit(EXIT_FAILURE);
-}
-
-inline static void messExit(const char *fmt, ...)
-    __attribute__((format(printf, 1, 2), noreturn));
-
-inline static void messExit(const char *fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-
-    fprintf(stderr, "\n");
-
-    exit(EXIT_FAILURE);
-}
+void errMsg(const char *fmt, ...) PFFORMAT(1, 2);
+void errExit(const char *fmt, ...) PFFORMAT(1, 2);
+void err_exit(const char *format, ...) PFFORMAT(1, 2);
+void errExitEN(int errnum, const char *fmt, ...) PFFORMAT(2, 3);
+void fatal(const char *format, ...) PFFORMAT(1, 2);
+void usageErr(const char *fmt, ...) PFFORMAT(1, 2);
+void cmdLineErr(const char *fmt, ...) PFFORMAT(1, 2);
 
 #endif
