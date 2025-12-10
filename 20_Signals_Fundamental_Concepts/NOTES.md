@@ -54,3 +54,6 @@ struct sigaction {
 ```
 
 ## TODO
+
+- Create a program that prints information about a signal number, similar to
+kill but way more verbose

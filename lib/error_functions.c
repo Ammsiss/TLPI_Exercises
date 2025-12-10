@@ -134,6 +134,8 @@ void usageErr(const char *fmt, ...)
     vfprintf(stderr, fmt, ap);
     va_end(ap);
 
+    fprintf(stderr, "\n");
+
     fflush(stderr);
     exit(EXIT_FAILURE);
 }
@@ -151,6 +153,8 @@ void cmdLineErr(const char *fmt, ...)
     va_start(ap, fmt);
     vfprintf(stderr, fmt, ap);
     va_end(ap);
+
+    fprintf(stderr, "\n");
 
     fflush(stderr);           /* In case stderr is not line-buffered */
     exit(EXIT_FAILURE);

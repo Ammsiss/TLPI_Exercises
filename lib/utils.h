@@ -13,9 +13,15 @@
 inline static int getNum(const char *numStr, char *msg)
 {
     char *end;
+
+    errno = 0;
     int num = strtol(numStr, &end, 10);
+    if (errno == ERANGE)
+        errExit("strtol");
+
     if (*end != '\0')
         errExit("%s", (msg == NULL) ? "strtol" : msg);
+
     return num;
 }
 

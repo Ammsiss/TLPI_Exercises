@@ -25,3 +25,5 @@
 ## More Info
 
 ## TODO
+
+- Go over this: *You should use instead readpassphrase(3bsd), provided by libbsd.*

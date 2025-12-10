@@ -43,13 +43,18 @@ systems can be found in McKusick et al., 1996 (BSD), Goodheart & Cox, 1994
 
 ## TODO
 
+- erratta for figure 49-4 ? specifies 0 in the mmap call when should be
+NULL as well as the explanaiton of that figure being quite confusing.
+
 - Make a read only text viewer that utilizes a shared memory mapping
 to load the file. This automatically gives you lazy loading via the
 kernels copy-on-write mechanism. You can optionally also add "memory-
 poking" where you change a single byte worth of information as that
 would not require shifting the file contents.
 
-- erratta for figure 49-4 ? specifies 0 in the mmap call when should be
-NULL as well as the explanaiton of that figure being quite confusing.
+- Test out the semantics of opening a private file mapping that other
+processes are modifying while you have the mapping open. If you open
+a mapping, read a section, then another process modifies that section
+and you read it again, is it updated since the first time you read it?
 
 - Come back to the last exersize (non-linear mapping)
