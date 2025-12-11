@@ -13,4 +13,14 @@
 - Finish standardizing chapters. (rename, add readme and notes, and
   change exersise filenames)
 
-- Replace replace use of strtol with util function in all relevant files
+- Replace replace use of strtol with util function in all
+relevant files
+
+- Explore the idea of a library specific make file instead of 
+duplicating that logic in the common make file. Something like this 
+could work in the per chapter make files (Recurse then execute make):
+
+```make
+$(LIB_PATH):
+	$(MAKE) -C $(LIB_DIR) $(LIB_NAME)
+```

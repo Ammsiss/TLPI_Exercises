@@ -24,11 +24,12 @@ void da_free(DynArray *arr);
 void* da_detach(DynArray *arr);
 void* da_get(const DynArray *arr, size_t index);
 void* da_push(DynArray *arr);
-void* da_pop(DynArray *arr);
+int da_pop(DynArray *arr);
 
 int da_reverse(DynArray *arr);
 
 // Sorting
+
 int int_asc(const void *elem0, const void *elem1);
 void da_sort(DynArray *arr, int (* pred)(const void *, const void *));
 

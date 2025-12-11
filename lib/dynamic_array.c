@@ -1,20 +1,9 @@
-/*
- * list_pop()
- * list_clear()
- * list_foreach() macro
- */
-
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
 
-typedef struct {
-    void *data;
-    size_t size;
-    size_t capacity;
-    size_t dataSize;
-} DynArray;
+#include "dynamic_array.h"
 
 int da_intMax(DynArray *arr)
 {

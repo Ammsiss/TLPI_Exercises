@@ -36,3 +36,9 @@
 
 - Review ```sysdeps/posix/euidaccess.c``` which is a GNU C libarary implementation
   of exersise 15-4.
+
+- Make a program that takes a file and a list of dependencies
+(likemake) and tells you if any of the pre-reqs are out of date. The
+checking algorithm can work by first seeing if all pre-reqs exist then 
+determining if its been modified at any time later then the last 
+modificaiton of the target.

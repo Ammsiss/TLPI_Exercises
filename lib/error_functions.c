@@ -1,6 +1,6 @@
-#include "error_functions.h"
-#include "ename.c.inc"   /* Defines ename array and MAX_ENAME */
 #include "tlpi_hdr.h" // IWYU pragma: export
+
+#include "ename.c.inc"   /* Defines ename array and MAX_ENAME */
 
 NORETURN
 static void terminate(int use_exit3)

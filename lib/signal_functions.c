@@ -1,13 +1,3 @@
-/*************************************************************************\
-*                  Copyright (C) Michael Kerrisk, 2019.                   *
-*                                                                         *
-* This program is free software. You may use, modify, and redistribute it *
-* under the terms of the GNU Lesser General Public License as published   *
-* by the Free Software Foundation, either version 3 or (at your option)   *
-* any later version. This program is distributed without any warranty.    *
-* See the files COPYING.lgpl-v3 and COPYING.gpl-v3 for details.           *
-\*************************************************************************/
-
 /* Listing 20-4 */
 
 /* signal_functions.c
@@ -18,6 +8,10 @@
 */
 
 #define _GNU_SOURCE
+
+#include "tlpi_hdr.h" // IWYU pragma: export
+#include "signal_functions.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
@@ -28,18 +22,18 @@
    indiscriminately calling them from signal handlers). */
 
     /* Print list of signals within a signal set */
-void printSigset(FILE *of, const char *prefix, const sigset_t *sigset)
+void printSigset(FILE *of, const char *ldr, const sigset_t *mask)
 {
     int cnt = 0;
     for (int sig = 1; sig < NSIG; sig++) {
-        if (sigismember(sigset, sig)) {
+        if (sigismember(mask, sig)) {
             cnt++;
-            fprintf(of, "%s%d (%s)\n", prefix, sig, strsignal(sig));
+            fprintf(of, "%s%d (%s)\n", ldr, sig, strsignal(sig));
         }
     }
 
     if (cnt == 0)
-        fprintf(of, "%s<empty signal set>\n", prefix);
+        fprintf(of, "%s<empty signal set>\n", ldr);
 }
    /* Print mask of blocked signals for this process */
 int printSigMask(FILE *of, const char *msg)

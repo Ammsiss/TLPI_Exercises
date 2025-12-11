@@ -1,7 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "error_functions.h"
+#include "tlpi_hdr.h" // IWYU pragma: export
 #include "dynamic_array.h"
 
 int read_back(int fd, char* c)

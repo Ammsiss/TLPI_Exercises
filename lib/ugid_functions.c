@@ -1,27 +1,11 @@
-/*************************************************************************\
-*                  Copyright (C) Michael Kerrisk, 2019.                   *
-*                                                                         *
-* This program is free software. You may use, modify, and redistribute it *
-* under the terms of the GNU Lesser General Public License as published   *
-* by the Free Software Foundation, either version 3 or (at your option)   *
-* any later version. This program is distributed without any warranty.    *
-* See the files COPYING.lgpl-v3 and COPYING.gpl-v3 for details.           *
-\*************************************************************************/
-
-/* Listing 8-1 */
-
-/* ugid_functions.c
-
-   Implements a set of functions that convert user/group names to user/group IDs
-   and vice versa.
-*/
 #include <pwd.h>
 #include <grp.h>
 #include <stdlib.h>
-#include "ugid_functions.h"     /* Declares functions defined here */
 
-char *          /* Return name corresponding to 'uid', or NULL on error */
-userNameFromId(uid_t uid)
+#include "ugid_functions.h"
+
+/* Return name corresponding to 'uid', or NULL on error */
+char * userNameFromId(uid_t uid)
 {
     struct passwd *pwd;
 
@@ -29,8 +13,8 @@ userNameFromId(uid_t uid)
     return (pwd == NULL) ? NULL : pwd->pw_name;
 }
 
-uid_t           /* Return UID corresponding to 'name', or -1 on error */
-userIdFromName(const char *name)
+/* Return UID corresponding to 'name', or -1 on error */
+uid_t userIdFromName(const char *name)
 {
     struct passwd *pwd;
     uid_t u;
@@ -50,8 +34,8 @@ userIdFromName(const char *name)
     return pwd->pw_uid;
 }
 
-char *          /* Return name corresponding to 'gid', or NULL on error */
-groupNameFromId(gid_t gid)
+/* Return name corresponding to 'gid', or NULL on error */
+char * groupNameFromId(gid_t gid)
 {
     struct group *grp;
 
@@ -59,8 +43,8 @@ groupNameFromId(gid_t gid)
     return (grp == NULL) ? NULL : grp->gr_name;
 }
 
-gid_t           /* Return GID corresponding to 'name', or -1 on error */
-groupIdFromName(const char *name)
+/* Return GID corresponding to 'name', or -1 on error */
+gid_t groupIdFromName(const char *name)
 {
     struct group *grp;
     gid_t g;
