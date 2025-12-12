@@ -19,6 +19,10 @@
 
 #define _POSIX_C_SOURCE 1
 
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include <sys/types.h>
 

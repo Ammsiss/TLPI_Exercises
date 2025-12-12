@@ -1,12 +1,15 @@
 #define _GNU_SOURCE
 
+#include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 #include <pwd.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 
-#include "../lib/error_functions.h"
-
+#include "error_functions.h"
 
 static struct passwd *getpwnam_clone(const char *name)
 {

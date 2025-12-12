@@ -1,11 +1,4 @@
-/* Listing 20-4 */
-
-/* signal_functions.c
-
-   Various useful functions for working with signals.
-
-   Modified by Junji Tai 2025
-*/
+/* Various useful functions for working with signals. */
 
 #define _GNU_SOURCE
 

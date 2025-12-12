@@ -18,6 +18,8 @@
 
 void handler(int sig)
 {
+    (void) sig;
+
     sleep(1);
 }
 

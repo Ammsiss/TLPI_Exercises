@@ -1,8 +1,11 @@
 #define _GNU_SOURCE
 
+#include <signal.h>
+#include <stdio.h>
 #include <pthread.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "../lib/error_functions.h"
 
@@ -21,6 +24,8 @@ void printSigSet(sigset_t *set)
 
 void *threadFunc(void *arg)
 {
+    (void) arg;
+
     sleep(1);
 
     sigset_t threadMask;

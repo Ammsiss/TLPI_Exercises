@@ -1,8 +1,10 @@
 #define _GNU_SOURCE
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <errno.h>
 
 #include "../lib/binary_tree.h"
 #include "../lib/error_functions.h"

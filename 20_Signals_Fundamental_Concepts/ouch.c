@@ -29,6 +29,8 @@
 
 static void sigHandler(int sig)
 {
+    (void) sig;
+
     printf("Ouch!\n");   /* UNSAFE (see Section 21.1.2) */
 }
 

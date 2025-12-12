@@ -43,3 +43,6 @@ operations, which requires much more complex locking strategies.*
 **Answer**
 
 See *test_ts_tree.c* and *ts_btree.h*
+
+Also see *binary_tree.c* and *binary_tree.h* for my implementation 
+before adding thread safety.

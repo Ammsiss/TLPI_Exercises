@@ -1,5 +1,12 @@
 #define _GNU_SOURCE
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <grp.h>
+#include <string.h>
+#include <sys/types.h>
+#include <grp.h>
 #include <limits.h>
 #include <unistd.h>
 #include <grp.h>

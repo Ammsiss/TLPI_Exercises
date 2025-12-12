@@ -17,8 +17,7 @@ LCFLAGS  := $(CFLAGS)
 LIB_SOURCE := $(wildcard $(LIB_DIR)/*.c)
 LIB_OBJ    := $(patsubst %.c,%.o,$(LIB_SOURCE))
 
-# $? only uses the pre-reqs that were determined to be newer
-# (Potentially problematic? Maybe just use $^)
+# $? only uses the pre-reqs that were determined to be newer.
 $(LIB_PATH): $(LIB_OBJ)
 	ar rcs $@ $?
 
@@ -26,17 +25,14 @@ $(LIB_DIR)/%.o: $(LIB_DIR)/%.c
 	$(CC) $(LCFLAGS) -c $< -o $@
 
 # Because no recipe is specified, Make merges this dependency
-# with the above generic rule for error_functions.o. This is
-# a great pattern as you can specify a general rule and then
-# any targets that need extra requirements can have a separate
-# rule specifying what they depend on.
+# with the above generic rule for error_functions.o.
 $(LIB_DIR)/error_functions.o: $(LIB_DIR)/ename.c.inc
 
 $(LIB_DIR)/ename.c.inc:
 	sh $(LIB_DIR)/Build_ename.sh > $@
 	echo 1>&2 "ename.c.inc built"
 # Output to stderr so this message can still be seen
-# with 'make -s'
+# with 'make -s'.
 
 lclean:
 	rm -f $(LIB_DIR)/*.o $(LIB_PATH) $(LIB_DIR)/ename.c.inc

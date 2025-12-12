@@ -22,9 +22,11 @@
 */
 
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-#include "../lib/error_functions.h"
+#include "error_functions.h"
 
 static void sigHandler(int sig)
 {
@@ -45,7 +47,7 @@ static void sigHandler(int sig)
     exit(EXIT_SUCCESS);
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
     /* Establish same handler for SIGINT and SIGQUIT. Here we use the
        simpler signal() API to establish a signal handler, but for the

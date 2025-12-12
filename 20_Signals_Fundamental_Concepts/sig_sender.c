@@ -25,7 +25,10 @@
 
 #define _GNU_SOURCE
 
+#include <stdlib.h>
+#include <string.h>
 #include <signal.h>
+#include <stdio.h>
 
 #include "../lib/error_functions.h"
 

@@ -1,9 +1,10 @@
 #define _GNU_SOURCE
 
+#include <stdlib.h>
 #include <signal.h>
 
-#include "../lib/error_functions.h"
-#include "../lib/signal_functions.h"
+#include "error_functions.h"
+#include "signal_functions.h"
 
 int main(void)
 {

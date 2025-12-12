@@ -14,6 +14,9 @@
    }
 */
 
+#define _GNU_SOURCE
+
+#include <stdlib.h>
 #include <limits.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -21,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <bits/posix1_lim.h>
+#include <errno.h>
 
 #include "../lib/error_functions.h"
 

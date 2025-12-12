@@ -24,15 +24,18 @@
 
 #define _GNU_SOURCE
 
+#include <stdlib.h>
 #include <signal.h>
 #include <stdio.h>
 
-#include "../lib/error_functions.h"
+#include "error_functions.h"
 
 int breakOut = 0;
 
 void recurseHandler(int sig)
 {
+    (void) sig;
+
     printf("Entered func!\n");
 
     if (breakOut)
