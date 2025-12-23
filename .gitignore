@@ -1,10 +1,10 @@
 .cache/
 compile_commands.json
 playground/
-# NOTE: Ignore here also makes ripgrep not list it for fuzzy finder
 *.bin
 *.o
 .clangd
 ename.c.inc
 compile_flags.txt
 tlpilib.a
+.rgignore
