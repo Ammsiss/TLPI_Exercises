@@ -1,28 +1,30 @@
 ## Syscalls
 
-**fcntl(2)** -> Perform a range of control operations on an open fd
+`fcntl(2)` - perform a range of control operations on an open fd
 
-**dup(2)** -> Duplicate a fd
-**dup2(2)** -> Duplicates an fd with a specifiable fd number
-**dup3(2)** -> Same as *dup2()* but supports an additional flag argument
+`dup(2)`  - duplicate a fd  
+`dup2(2)` - duplicates an fd with a specifiable fd number  
+`dup3(2)` - like `dup2()` but with an additional flag argument
 
-**pread(2)** -> Read a specific offset of a fd, Atomically
-**pwrite(2)** -> Write to a specific offset of a fd, Atomically
+`pread(2)`  - read a specific offset atomically  
+`pwrite(2)` - write a specific offset atomically
 
-**readv(2)** -> Perform a 'scatter gather' read
-**writev(2)** -> Perform a 'scatter gather' write
-**preadv(2)** -> Same as *readv()* but at a specific offset, Atomically
-**pwritev(2)** -> Same as *writev()* but at a specific offset, Atomically
+`readv(2)`   - perform a 'scatter gather' read  
+`preadv(2)`  - lets you specify a specific offset
 
-**truncate(2)** -> Set the size of a file specified by a string path
-**ftruncate(2)** -> Set the size of a file specified by a fd
+`writev(2)`  - perform a 'scatter gather' write  
+`pwritev(2)` - lets you speicfy a specific offset
 
-**mkstemp(3)** -> Create and open a unique filename based on a tempalte
-**tmpfile(3)** -> Similar to *mkstemp(2)* except C11 and returns a FILE*
+`truncate(2)` - set the size of a file  
+`ftruncate(2)` - lets you specify file by fd
 
-## More Info
+`mkstemp(3)` - create a tempfile from a template  
+`tmpfile(3)` - return a C-standard tempfile
+
 
 ## Tables
 
-See **Figure 5-2** for a relationship between file descriptors, open file
+**Figure 5-2**: Relationship between file descriptors, open file
 descriptions, and i-nodes.
+
+## More Info

@@ -41,8 +41,8 @@ for this purpose). Each element of the tree holds a key-value
 pair. You will also need to define the structure for each
 element to include a mutex that protects that element so that
 only one thread at a time can access it. The `initialize()`,
-`add()`, and `lookup()` functions are relatively simple to
-imple- ment. The `delete()` operation requires a little more
+`add()`, and `lookup()` functions are relatively simple to imp-
+lement. The `delete()` operation requires a little more
 effort.
 
 *Removing the need to maintain a balanced tree greatly
