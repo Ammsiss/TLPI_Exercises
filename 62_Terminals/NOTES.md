@@ -29,11 +29,12 @@
 
 **Figure 62-1**: Input and output queues for a terminal device
 
-**Table 62-1**: Terminal special characters
-**Table 62-2**: Terminal flags
+**Table 62-1**: Terminal special characters  
+**Table 62-2**: Terminal flags  
 **Table 62-3**: Differences between cooked, cbreak, and raw
-terminal modes
-**Table 62-4**: Values for the tcflush() queue_selector argument
+terminal modes  
+**Table 62-4**: Values for the `tcflush()` queue_selector
+argument  
 **Table 62-5**: Values for the tcflush() action argument
 
 ## More Info
