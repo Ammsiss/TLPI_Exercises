@@ -1,3 +1,5 @@
+## TODO
+
 - Replace replace use of strtol with util function in all
 relevant files
 
@@ -9,8 +11,3 @@ could work in the per chapter make files (Recurse then execute make):
 
 - Figure out how to not auto compile c files in chapters that are just
 sym linked library source files.
-
-- Continue updating NOTES.md and README.md in each chapter
-  directory. (Current directory: 17)
-
-- Replace the rest of the Makefiles in all chapters
