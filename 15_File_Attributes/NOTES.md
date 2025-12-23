@@ -1,44 +1,48 @@
 ## Syscalls
 
-- **stat(2)** -> Retrieves information about a file
-    (See t_stat.c, lstat(2), fstat(2) and stat(1))
+`stat(2)` - retrieves information about a file  
+`lstat(2)` - doesn't follow links  
+`fstat(2)` - specify file with a fd
 
-- **utime(2)** -> Explicitly change file timestamps
-    (See t_utime.c, utimes(2), futimes(3), utimensat(2) and futimens(2))
+`utime(2)` - explicitly change file timestamps  
+`utimes(2)`  
+`futimes(3)`  
+`utimensat(2)`  
+`futimens(2)`
 
-- **chown(2)** -> Set the gid and the uid of a file
-    (See t_chown.c, lchown(2) and fchown(2))
+`chown(2)` - set the gid and the uid of a file  
+`lchown(2)`  
+`fchown(2)`
 
-- **access(2)** -> Checks file accessibility based on real uid and gid of the process
-    (See *Borisov, 2005*, as to why access(2) should never be used.)
+`access(2)` - checks file accessibility  
+See *Borisov, 2005*, as to why access(2) should never be used.
 
-- **umask(2)** -> Set the current processes umask value
-    (See t_umask.c and umask(1))
-
-- **chmod(2)** -> Sets the permission bits on a file
-    (See t_chmod.c and chmod(1))
+`umask(2)` - set the current processes umask value  
+`chmod(2)` - sets the permission bits on a file
 
 ## Tables
 
-- See **Table 15-2** for the effect various functions have on timestamps.
+**Table 15-2**: various functions effects on timestamps.
 
 ## TODO
 
-- Find out why *t_utime.c* does not independently update atime when
-  atime == mtime even with when mounted with the *strictatime*.
-  (Perhaps it is the FS_NOATIME_FL inode flag).
+- Find out why *t_utime.c* does not independently update atime
+  when `atime == mtime` even with when mounted with
+  *strictatime*. (Perhaps it is the `FS_NOATIME_FL` inode flag).
 
-- Review 15.4.7 exploit prevention via clearing of set gid function.
+- Review **Section 15.4.7** exploit prevention via clearing of
+  set gid function.
 
-- Write a c program for exersize 15-1. b)
+- Write a c program for **Exersize 15-1.b**
 
-- Review TLPI answers repo for more robust solution of exersize 3.
+- Review TLPI answers repo for more robust solution of exersize
+  3.
 
-- Review ```sysdeps/posix/euidaccess.c``` which is a GNU C libarary implementation
-  of exersise 15-4.
+- Review *sysdeps/posix/euidaccess.c* which is a GNU C
+  libarary implementation of **Exersise 15-4**.
 
 - Make a program that takes a file and a list of dependencies
-(likemake) and tells you if any of the pre-reqs are out of date. The
-checking algorithm can work by first seeing if all pre-reqs exist then 
-determining if its been modified at any time later then the last 
-modificaiton of the target.
+  (likemake) and tells you if any of the pre-reqs are out of
+  date. The checking algorithm can work by first seeing if all
+  pre-reqs exist then determining if its been modified at any
+  time later then the last modificaiton of the target.
