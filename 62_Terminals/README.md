@@ -40,7 +40,7 @@ some seemingly random terminal path of */dev/null*, when my real
 terminal was */dev/pts/1*. This was because both of those
 terminals shared the smae Inode number which is allowed because
 they were on diferent file systems. I confirmed this with the
-following simple script: *find_file- _with_inode.sh*.
+following simple script: *find_file_with_inode.sh*.
 
 After also comparing against the device number stored in the
 stat object the problem was solved!
