@@ -1,6 +1,8 @@
 #ifndef TLPI_HDR_H
 #define TLPI_HDR_H
 
+#define _GNU_SOURCE
+
 #include <sys/types.h>  /* Type definitions used by many programs */
 #include <stdio.h>      /* Standard I/O functions */
 #include <stdlib.h>     /* Prototypes of commonly used library functions,

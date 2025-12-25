@@ -8,3 +8,4 @@ playground/
 ename.c.inc
 compile_flags.txt
 tlpilib.a
+tlpi-dist/

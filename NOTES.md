@@ -11,3 +11,7 @@ could work in the per chapter make files (Recurse then execute make):
 
 - Figure out how to not auto compile c files in chapters that are just
 sym linked library source files.
+
+- Make your own program using sockets or posix message queues to
+  send the chat.html or conversations.json file to the linux
+  box.

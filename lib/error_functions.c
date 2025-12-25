@@ -32,7 +32,8 @@ static void outputError(int use_err, int err, int flush_stdout,
     else
         snprintf(err_text, BUF_SIZE, ":");
 
-    snprintf(buf, BUF_SIZE, "ERROR%s %s\n", err_text, user_msg);
+    snprintf(buf, BUF_SIZE, "\x1b[1;31mERROR\x1b[m%s %s\n",
+            err_text, user_msg);
 
     if (flush_stdout)
         fflush(stdout);
