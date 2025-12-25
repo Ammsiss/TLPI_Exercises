@@ -1,5 +1,3 @@
-## TODO
-
 - Replace replace use of strtol with util function in all
 relevant files
 
@@ -15,3 +13,8 @@ sym linked library source files.
 - Make your own program using sockets or posix message queues to
   send the chat.html or conversations.json file to the linux
   box.
+
+- Continue updating NOTES.md and README.md in each chapter
+  directory. (Current directory: 17)
+
+- Replace the rest of the Makefiles in all chapters
