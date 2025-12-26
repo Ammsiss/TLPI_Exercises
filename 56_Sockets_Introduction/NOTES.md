@@ -37,4 +37,6 @@ this limit.
 **Further Information**: Refer to the sources of further
 information listed in **Section 59.15**
 
+See [socket(7)]() for general information about the sockets api.
+
 ## TODO

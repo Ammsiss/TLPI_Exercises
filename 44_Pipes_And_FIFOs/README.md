@@ -66,7 +66,7 @@ receives the SIGINT or SIGTERM signals, it removes the server FIFO and terminate
 
 **Answer**
 
-See relevant code in *fifo_seqnum_server.c*
+See relevant code in *fifo_sq_sv.c*
 
 ## Ex. 44-5
 
@@ -102,7 +102,7 @@ accordingly.
 
 **Answer**
 
-See relevant code in *fifo_seqnum_server.c* as well as *malicious_client.c*
+See relevant code in *fifo_sq_sv.c* as well as *malicious_client.c*
 
 ## Ex. 44-7
 
