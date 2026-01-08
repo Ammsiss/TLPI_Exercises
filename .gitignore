@@ -3,6 +3,7 @@ compile_commands.json
 playground/
 *.bin
 *.o
+*.d
 .clangd
 ename.c.inc
 compile_flags.txt

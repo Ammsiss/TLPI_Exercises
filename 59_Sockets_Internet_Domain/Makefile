@@ -13,9 +13,17 @@ DEP    := $(patsubst %.c,%.d,$(CFILES))
 .PHONY: all
 all: $(BINS)
 
+.PHONY: build_deploy
+build_deploy: nv_sv.bin nv_cl.bin
+	./nv_sv.bin&
+
+.PHONY: kill_sv
+kill_sv:
+	pkill -e nv_sv.bin
+
 .PHONY: clean
 clean:
-	rm -f $(BINS) compile_commands.json
+	rm -f $(BINS) $(DEP) compile_commands.json
 
 # So not to be set to the first rule in common.mk
 .DEFAULT_GOAL := all
