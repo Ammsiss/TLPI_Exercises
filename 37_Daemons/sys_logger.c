@@ -9,7 +9,9 @@
     LOG_DEBUG
 */
 
-#include "../lib/error_functions.h"
+#include "error_functions.h"
+
+#include <string.h>
 #include <syslog.h>
 
 #define LEVEL_COUNT 8
