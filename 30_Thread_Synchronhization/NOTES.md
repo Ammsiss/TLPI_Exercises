@@ -28,3 +28,5 @@ without synchronization
 ## More Info
 
 ## TODO
+
+- [ ] Test *binary_tree.c*

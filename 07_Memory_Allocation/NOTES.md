@@ -23,3 +23,5 @@
 ## More Info
 
 ## TODO
+
+- [ ] Test *dynamic_array.c*

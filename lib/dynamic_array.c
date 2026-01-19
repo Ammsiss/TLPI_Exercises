@@ -111,6 +111,19 @@ int da_pop(DynArray *arr)
     return 1;
 }
 
+int da_clear(DynArray *arr)
+{
+    da_free(arr);
+
+    arr->size = 0;
+    arr->capacity = 0;
+    arr->data = malloc(arr->size * arr->dataSize);
+    if (arr->data == NULL)
+        return -1;
+
+    return 0;
+}
+
 // Algorithms
 
 int da_reverse(DynArray *arr)

@@ -179,11 +179,13 @@ inetAddressStr(const struct sockaddr *addr, socklen_t addrlen,
 {
     char host[NI_MAXHOST], service[NI_MAXSERV];
 
-    if (getnameinfo(addr, addrlen, host, NI_MAXHOST,
-                    service, NI_MAXSERV, NI_NUMERICSERV) == 0)
+    int err_code;
+    if ((err_code = getnameinfo(addr, addrlen, host, NI_MAXHOST,
+                    service, NI_MAXSERV, NI_NUMERICSERV | NI_NUMERICHOST)) == 0)
         snprintf(addrStr, addrStrLen, "(%s, %s)", host, service);
-    else
-        snprintf(addrStr, addrStrLen, "(?UNKNOWN?)");
+    else {
+        snprintf(addrStr, addrStrLen, "%s", gai_strerror(err_code));
+    }
 
     return addrStr;
 }

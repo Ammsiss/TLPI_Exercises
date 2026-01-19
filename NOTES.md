@@ -1,16 +1,21 @@
 ## TODO
 
+- Change the make files to use dynamic library instead of static
+
+- Clean up git history (linearize merges, compress small
+  commits). Perhaps with this method: "rebuild a brand-new
+  linear history from selected “checkpoint” commits (chapter
+  commits), by taking the full tree snapshot at those points and
+  committing it in a fresh branch. This preserves the content
+  exactly at each checkpoint, just rearranges history
+  into a clean line."
+
 - Replace replace use of strtol with util function in all
 relevant files
 
-- Explore the idea of a library specific make file instead of 
-duplicating that logic in the common make file. Something like this 
+- Explore the idea of a library specific make file instead of
+duplicating that logic in the common make file. Something like this
 could work in the per chapter make files (Recurse then execute make):
-
-- Maybe add -D tracking to make file (is it even worth it)?
-
-- Figure out how to not auto compile c files in chapters that are just
-sym linked library source files.
 
 - Make your own program using sockets or posix message queues to
   send the chat.html or conversations.json file to the linux
@@ -24,8 +29,6 @@ sym linked library source files.
 - Replace replace use of strtol with util function in all
 relevant files
 
-- Explore the idea of a library specific make file instead of 
-duplicating that logic in the common make file. Something like this 
+- Explore the idea of a library specific make file instead of
+duplicating that logic in the common make file. Something like this
 could work in the per chapter make files (Recurse then execute make):
-
-- Maybe add -D tracking to make file (is it even worth it)?
