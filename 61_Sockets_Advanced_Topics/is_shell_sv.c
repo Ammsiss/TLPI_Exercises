@@ -1,3 +1,22 @@
+/*
+ * If you are running this from a external machine make sure
+ * to disable any inbound tcp firewall rules for the specific
+ * port the listening socket is bound to.
+ *
+ * For example I had to run this on fedora:
+ *
+ *     firewall-cmd --add-port=50000/tcp
+ *
+ * Then to remove it after:
+ *
+ *    firewall-cmd --remove-port=50000/tcp
+ *
+ * Of course this program is horrendously dangerous if run
+ * from a priviliged user so maybe just stick to local testing...
+ *
+ * ...Or spin up a VM!
+ */
+
 #include "tlpi_hdr.h" // IWYU pragma: export
 #include "is_shell.h"
 #include "inet_sockets.h"
