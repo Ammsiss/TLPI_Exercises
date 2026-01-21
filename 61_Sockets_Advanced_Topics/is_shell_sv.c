@@ -84,9 +84,18 @@ int main(void)
     if (sigaction(SIGCHLD, &sa, NULL) == -1)
         errExit("sigaction");
 
-    int sfd = inetListen(PORT, 10, NULL);
+    socklen_t addrlen;
+
+    int sfd = inetListen(PORT, 10, &addrlen);
     if (sfd == -1)
         errExit("inetListen");
+
+    if (addrlen == sizeof(struct sockaddr_in))
+        printf("Bound to IPV4 wildcard address\n");
+    else if (addrlen == sizeof(struct sockaddr_in6))
+        printf("Bound to IPV6 wildcard address\n");
+    else
+        printf("Unknown addrlen: %d\n", addrlen);
 
     struct sockaddr_storage claddr;
     socklen_t socklen;
