@@ -15,10 +15,10 @@ Run the following command to see the diff with the original
 listing.
 
 ```bash
-diff ../tlpi-dist/altio/poll_pipes.c select_pipes.c 
+diff ../tlpi-dist/altio/poll_pipes.c select_pipes.c
 ```
 
-## Ex. 63-2
+## Ex. 63-8
 
 **Question**
 
