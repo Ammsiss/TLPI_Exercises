@@ -15,7 +15,7 @@ all: $(BINS)
 
 .PHONY: clean
 clean:
-	rm -f $(BINS) $(DEP) compile_commands.json
+	rm -f $(BINS) $(DEP)
 
 # So not to be set to the first rule in common.mk
 .DEFAULT_GOAL := all

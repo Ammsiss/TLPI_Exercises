@@ -29,6 +29,9 @@ multiple file descriptors
 **Listing 63-2** (*poll_pipes.c*): Using `poll()` to monitor
 multiple file descriptors
 
+**Listing 63-3** (*demo_sigio.c*): Using signal-driven I/O on a
+terminal
+
 ## Tables
 
 **Table 63-1**: Use of level-triggered and edge-triggered
@@ -47,6 +50,9 @@ end of a pipe or FIFO
 write end of a pipe or FIFO
 
 **Table 63-6**: `select()` and `poll()` indications for sockets
+
+**Table 63-7**: `si_code` and `si_band` values in the
+`siginfo_t` structure for “I/O possible” events
 
 ## More Info
 
