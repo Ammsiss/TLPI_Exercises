@@ -45,5 +45,5 @@ lclean:
 
 .PHONY: cc
 cc:
-	rm $(ROOT_DIR)/compile_commands.json
+	rm -rf $(ROOT_DIR)/compile_commands.json
 	bear --output ../compile_commands.json -- $(MAKE) clean lclean all
