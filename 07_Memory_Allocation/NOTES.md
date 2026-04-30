@@ -20,8 +20,6 @@
 **Figure 7-1**: Memory block returned by `malloc()`  
 **Figure 7-3**: Heap containing allocated blocks and a free list
 
-## More Info
-
 ## TODO
 
 - [ ] Test *dynamic_array.c*

@@ -1,17 +1,21 @@
-CC = clang
-CFLAGS = -Wall -Wextra -Wpedantic -g -O0 -std=c23 -I../lib
+include ../common.mk
 
-CFILES = $(wildcard ./*.c)
-LIBS = $(wildcard ../lib/*.c)
-BASE_NAME = $(basename $(CFILES))
-BIN_NAME = $(addsuffix .bin, $(BASE_NAME))
+# Add any extra libs here
+# CFLAGS +=
+
+CFILES := $(foreach FILE, $(wildcard *.c), \
+		 $(shell test -L "$(FILE)" || echo "$(FILE)"))
+BINS   := $(addsuffix .bin, $(basename $(CFILES)))
+DEP    := $(patsubst %.c,%.d,$(CFILES))
+
+-include $(DEP)
 
 .PHONY: all
-all: $(BASE_NAME)
-
-%: %.c
-	$(CC) $(CFLAGS) $< $(LIBS) -o $@.bin
+all: $(BINS)
 
 .PHONY: clean
 clean:
-	rm -f $(BIN_NAME)
+	rm -f $(BINS) $(DEP) $(ROOT_DIR)/compile_commands.json
+
+# So not to be set to the first rule in common.mk
+.DEFAULT_GOAL := all

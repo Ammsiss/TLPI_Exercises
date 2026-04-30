@@ -19,9 +19,3 @@
 `crypt(3)`
 
 `getpass(3)`
-
-## Tables
-
-## More Info
-
-## TODO

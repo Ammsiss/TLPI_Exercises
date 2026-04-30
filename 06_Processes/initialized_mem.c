@@ -8,7 +8,7 @@
     the data segment of memory.
 */
 
-#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,6 +43,9 @@ main(int argc, char *argv[])    /* Allocated in frame for main() */
 {
     static int key = 9973;      /* Initialized data segment */
     static char mbuf[10240000]; /* Uninitialized data segment */
+
+    (void) mbuf;                /* silence warning */
+
     char *p;                    /* Allocated in frame for main() */
 
     p = malloc(1024);           /* Points to memory in heap segment */

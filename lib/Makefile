@@ -1,3 +1,21 @@
-ename.c.inc :
-	sh Build_ename.sh > ename.c.inc
-	echo 1>&2 "ename.c.inc built"
+include ../common.mk
+
+# Add any extra libs here
+# CFLAGS +=
+
+CFILES := $(foreach FILE, $(wildcard *.c), \
+		 $(shell test -L "$(FILE)" || echo "$(FILE)"))
+BINS   := $(addsuffix .bin, $(basename $(CFILES)))
+DEP    := $(patsubst %.c,%.d,$(CFILES))
+
+-include $(DEP)
+
+.PHONY: all
+all: $(BINS)
+
+.PHONY: clean
+clean:
+	rm -f $(BINS) $(DEP) $(ROOT_DIR)/compile_commands.json
+
+# So not to be set to the first rule in common.mk
+.DEFAULT_GOAL := all

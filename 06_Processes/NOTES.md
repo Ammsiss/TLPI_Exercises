@@ -28,5 +28,3 @@ structures
 *Tanenbaum, 2007* and *Vahalia, 1996* describe virtual memory management in
 detail. The Linux kernel memory management algorithms and code are described
 in detail in *Gorman, 2004*.
-
-## TODO
