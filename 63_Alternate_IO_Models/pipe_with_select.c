@@ -1,5 +1,5 @@
 /*************************************************************************\
-*                  Copyright (C) Michael Kerrisk, 2025.                   *
+*                  Copyright (C) Michael Kerrisk, 2019.                   *
 *                                                                         *
 * This program is free software. You may use, modify, and redistribute it *
 * under the terms of the GNU General Public License as published by the   *
@@ -16,18 +16,24 @@
    exersize 63-1.
 */
 
-#include "tlpi_hdr.h" // IWYU pragma: export
+#define _GNU_SOURCE
 
 #include <time.h>
+#include <poll.h>
+#include <stdlib.h>
 #include <sys/select.h>
 
-int main(int argc, char **argv)
-{
+#include "tlpi_hdr.h" // IWYU pragma: export
+
+int main(int argc, char *argv[]) {
     int numPipes, randPipe, numWrites, j;
-    int (*pfds)[2];
+    int (*pfds)[2];                     /* File descriptors for all pipes */
 
     if (argc < 2 || strcmp(argv[1], "--help") == 0)
         usageErr("%s num-pipes [num-writes]", argv[0]);
+
+    /* Allocate the arrays that we use. The arrays are sized according
+       to the number of pipes specified on command line */
 
     numPipes = getInt(argv[1], GN_GT_0, "num-pipes");
     numWrites = (argc > 2) ? getInt(argv[2], GN_GT_0, "num-writes") : 1;
@@ -36,6 +42,8 @@ int main(int argc, char **argv)
     if (pfds == NULL)
         errExit("calloc");
 
+    /* Create the number of pipes specified on command line */
+
     int nfds = 0;
     fd_set read_set;
     FD_ZERO(&read_set);
@@ -43,12 +51,21 @@ int main(int argc, char **argv)
     for (j = 0; j < numPipes; j++) {
         if (pipe(pfds[j]) == -1)
             errExit("pipe %d", j);
+
+        /* Store the value 1 larger then the largest fd */
+
         if (pfds[j][0] > FD_SETSIZE)
             fatal("Pipe fd value exceeds FD_SETSIZE");
+
         if (pfds[j][0] >= nfds)
             nfds = pfds[j][0] + 1;
-        FD_SET(pfds[j][0], &read_set);
+
+        /* Add read end to the fd_set */
+
+         FD_SET(pfds[j][0], &read_set);
     }
+
+    /* Perform specified number of writes to random pipes */
 
     srandom((int) time(NULL));
     for (j = 0; j < numWrites; j++) {
@@ -59,14 +76,19 @@ int main(int argc, char **argv)
             errExit("write %d", pfds[randPipe][1]);
     }
 
-    struct timeval tv = { /*tv_sec=*/0, /*tv_usec=*/0 };
-    int ready = select(nfds, &read_set, NULL, NULL, &tv);
-    if (ready == -1)
+    /* Check which pipes have data available for reading */
+
+    struct timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 0;
+
+    int num_ready = select(nfds, &read_set, NULL, NULL, &tv);
+    if (num_ready == -1)
         errExit("select");
 
-    printf("ready = %d\n", ready);
+    printf("Select returned %d\n", num_ready);
 
-    if (ready > 0)
+    if (num_ready > 0)
         for (j = 0; j < numPipes; ++j)
             if (FD_ISSET(pfds[j][0], &read_set))
                 printf("Readable: %3d\n", pfds[j][0]);

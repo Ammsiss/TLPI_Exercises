@@ -25,7 +25,7 @@ int main(void) {
     sigemptyset(&block_set);
     sigaddset(&block_set, SIGRTMIN + 1);
 
-    /* BLock our signal so that we can process it
+    /* Block our signal so that we can process it
      * safely with sigtimedwait */
 
     if (sigprocmask(SIG_BLOCK, &block_set, NULL) == -1)

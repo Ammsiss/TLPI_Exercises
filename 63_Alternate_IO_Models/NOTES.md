@@ -5,6 +5,9 @@
 `select()` -> Advises fd events
 `poll()` -> Advises fd events
 
+`pselect()` -> Unmask signal while blocking
+`ppoll()` -> Unmask signal while blocking
+
 `FD_ZERO()` -> Initialize an fd set
 `FD_SET()` -> Add an fd to a set
 `FD_CLR()` -> Remove an fd from a set
@@ -20,6 +23,10 @@
 `POLLRDHUP` -> Shutdown on peer socket
 `POLLHUP` -> A hangup has occurred
 `POLLERR` -> An error has occurred
+
+`epoll_create()` -> Creates a new epoll instance
+`epoll_ctl()` -> Modified an epoll interest list
+`epoll_wait()` -> Return info from an fd(s) in the ready list
 
 ## Listings
 
@@ -56,6 +63,17 @@ write end of a pipe or FIFO
 
 ## More Info
 
+Stevens et al., 2004 describes I/O multiplexing and
+signal-driven I/O, with particular emphasis on the use of these
+mechanisms with sockets. Gammo et al, 2004 is a paper
+comparing the performance of select(), poll(), and epoll. A
+particularly interesting online resource is at
+http://www.kegel.com/c10k.html. Written by Dan Kegel, and
+entitled “The C10K problem,” this web page explores the issues
+facing developers of web servers designed to simultaneously
+serve tens of thousands of clients. The web page includes a host
+of links to related information.
+
 ## TODO
 
 - [ ] Build a small epoll-based network file server that handles
@@ -70,3 +88,5 @@ write end of a pipe or FIFO
   to employ epoll (or a similar API) on systems that provide it,
   and fall back to the use of select() or poll() on other
   systems.
+- [ ] Modify *echo_sv.c* so that it is concurrent instead of
+  iterative.
