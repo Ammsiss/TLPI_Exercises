@@ -29,3 +29,9 @@ could work in the per chapter make files (Recurse then execute make):
 - Explore the idea of a library specific make file instead of
 duplicating that logic in the common make file. Something like this
 could work in the per chapter make files (Recurse then execute make):
+
+- Do the chapter 40 exersizes. Learning the utmpx api while
+  outdated will still probably give you an idea of the shape of
+  the problem.
+
+- Check out alpine or void linux for a no systemd distro
