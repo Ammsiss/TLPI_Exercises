@@ -1,8 +1,7 @@
-## Macros
-## More Info
+## Man pages
 
-See the following man pages: man-pages(7), groff(1), man(7)
-malloc
+See the following man pages: `man-pages(7)`, `groff(1)`, `man(7)`
+
 **Structural / heading macros**
     .TH — top header (title, section, date, source, manual)
     .SH — section heading
