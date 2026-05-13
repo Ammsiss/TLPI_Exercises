@@ -12,3 +12,7 @@
 
 - Instead of using a pty pair for the vi scripting language
   program, create one that uses noevims modern message pack rpc.
+- While replay_script.c does work, the typescript.timed file could be made more
+  human readable by converting escape sequences (and optionally ansii escapes)
+  to a 2 char representation and back. Currently \n is the only one that is
+  printed literally.

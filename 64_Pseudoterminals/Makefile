@@ -15,7 +15,7 @@ all: $(BINS)
 
 .PHONY: clean
 clean:
-	rm -f $(BINS) $(DEP)
+	rm -f $(BINS) $(DEP) typescript typescript.timed
 
 # So not to be set to the first rule in common.mk
 .DEFAULT_GOAL := all
