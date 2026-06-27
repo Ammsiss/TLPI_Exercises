@@ -1,5 +1,9 @@
 ## TODO
 
+- The reason can't build 44 is cause that was before the library port so need
+  to add the lib functions from tlpi in the sym link style we adopted.
+
+RANDOM
 - Change the make files to use dynamic library instead of static
 
 - Clean up git history (linearize merges, compress small
